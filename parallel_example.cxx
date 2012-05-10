@@ -14,7 +14,9 @@
 
 using namespace tbb;
 using namespace std;
+
 static const size_t N = 2000;
+static const size_t GRAIN = 20;
 
 class GenerateContour
 {
@@ -31,6 +33,7 @@ public:
         vtkImageData* image = images[i];
         cf->SetInputData(image);
         cf->Update();
+
         if (!cf->GetOutput()->GetNumberOfCells())
           abort();
         }
@@ -68,6 +71,7 @@ public:
         cf->ProcessRequest(request,
                            executive->GetInputInformation(),
                            executive->GetOutputInformation());
+
         if (!cf->GetOutput()->GetNumberOfCells())
           abort();
         }
@@ -115,15 +119,18 @@ public:
         cf->ProcessRequest(request1,
                            executive->GetInputInformation(),
                            executive->GetOutputInformation());
+
         outInfo->Set(vtkStreamingDemandDrivenPipeline::UPDATE_EXTENT(),
                      image->GetExtent(),
                      6);
         cf->ProcessRequest(request2,
                            executive->GetInputInformation(),
                            executive->GetOutputInformation());
+
         cf->ProcessRequest(request3,
                            executive->GetInputInformation(),
                            executive->GetOutputInformation());
+
         if (!cf->GetOutput()->GetNumberOfCells())
           abort();
         }
@@ -170,15 +177,15 @@ int main()
   vtkTimerLog::MarkEndEvent("serial3");
 
   vtkTimerLog::MarkStartEvent("parallel");
-  parallel_for(blocked_range<size_t>(0, N, 20), gc);
+  parallel_for(blocked_range<size_t>(0, N, GRAIN), gc);
   vtkTimerLog::MarkEndEvent("parallel");
 
   vtkTimerLog::MarkStartEvent("parallel2");
-  parallel_for(blocked_range<size_t>(0, N, 20), gc2);
+  parallel_for(blocked_range<size_t>(0, N, GRAIN), gc2);
   vtkTimerLog::MarkEndEvent("parallel2");
 
   vtkTimerLog::MarkStartEvent("parallel3");
-  parallel_for(blocked_range<size_t>(0, N, 20), gc3);
+  parallel_for(blocked_range<size_t>(0, N, GRAIN), gc3);
   vtkTimerLog::MarkEndEvent("parallel3");
 
   vtkTimerLog::DumpLogWithIndents(&std::cout, 0.00001);
