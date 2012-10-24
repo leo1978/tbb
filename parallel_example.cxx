@@ -16,7 +16,7 @@ using namespace tbb;
 using namespace std;
 
 static const size_t N = 2000;
-static const size_t GRAIN = 20;
+static const size_t GRAIN = 50;
 
 class GenerateContour
 {
@@ -144,6 +144,7 @@ public:
 int main()
 {
   vtkRTAnalyticSource* source = vtkRTAnalyticSource::New();
+  source->SetWholeExtent(0, 40, 0, 40, 0, 40);
   //source->SetWholeExtent(0, 80, 0, 80, 0, 80);
   source->Update();
   std::cout << "Number of cells per block: "
