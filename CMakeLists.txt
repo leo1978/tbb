@@ -26,7 +26,7 @@ target_link_libraries(serial-contouramr ${TBB_LIBRARY}  vtkIOAMR vtkIOXML vtkFil
 add_executable(threaded_streamtrace threaded_streamtrace.cxx)
 target_link_libraries(threaded_streamtrace ${TBB_LIBRARY} vtkIOLegacy vtkImagingGeneral vtkFiltersFlowPaths vtkIOAMR vtkIOXML vtkFiltersAMR vtkRenderingVolumeOpenGL vtkRenderingFreeTypeOpenGL vtkInteractionStyle)
 
-add_executable(pcontour pcontour.cxx vtkPointSetNormalEstimation.cxx)
+add_executable(pcontour pcontour.cxx)
 target_link_libraries(pcontour ${TBB_LIBRARY} vtkFiltersGeneral vtkIOLegacy vtkImagingGeneral vtkFiltersFlowPaths vtkIOAMR vtkIOXML vtkFiltersAMR vtkRenderingVolumeOpenGL vtkRenderingFreeTypeOpenGL vtkInteractionStyle)
 
 add_executable(arraytest arraytest.cxx)

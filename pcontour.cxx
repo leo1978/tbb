@@ -40,7 +40,6 @@
 #include "vtkCutter.h"
 #include "vtkContourGrid.h"
 #include "vtkThreshold.h"
-#include "vtkPointSetNormalEstimation.h"
 #include "vtkCurvatures.h"
 #include "vtkMarchingCubes.h"
 #include "vtkFloatArray.h"
@@ -297,11 +296,6 @@ vtkSmartPointer<vtkAlgorithm> CreateTestFilter(const string& filterName)
   else if(filterName ==string("p2c"))
     {
     vtkNew<vtkPointDataToCellData> filter;
-    return filter.GetPointer();
-    }
-  else if(filterName ==string("normal"))
-    {
-    vtkNew<vtkPointSetNormalEstimation> filter;
     return filter.GetPointer();
     }
   else if(filterName ==string("surf"))
